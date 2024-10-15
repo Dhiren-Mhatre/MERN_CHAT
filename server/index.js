@@ -10,7 +10,7 @@ const app = express()
 require('dotenv').config()
 
 const corsOptions = {
-  origin: process.env.CLIENT_URL,
+  origin: true,
   credentials: true
 };
 

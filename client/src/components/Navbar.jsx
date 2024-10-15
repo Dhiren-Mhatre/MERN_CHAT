@@ -21,7 +21,7 @@ function Navbar() {
 
   useEffect(() => {
     if (socketId) {
-      setShow(true); // TODO:
+      setShow(true);  
     }
   }, [socketId]);
 
