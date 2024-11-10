@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
 const { initSocket } = require('./socket/index');
-
+const https =require('https');
 const app = express();
 require('dotenv').config();
 
@@ -45,19 +45,14 @@ const server = app.listen(process.env.PORT, () => {
 initSocket(server, corsOptions);
 
 // Self-ping every 10 minutes to keep the server active
-const pingInterval = 1 * 60 * 1000; // 10 minutes in milliseconds
-setInterval(async () => {
-  try {
-    const fetch = (await import('node-fetch')).default; // Dynamic import of node-fetch
-    const response = await fetch(`http://localhost:${process.env.PORT}/ping`);
-    if (!response.ok) {
-      console.log('Ping failed:', response.status);
-    } else {
-      console.log('Ping successful:', response.status);
-    }
-  } catch (err) {
-    console.error('Ping error:', err);
-  }
-}, pingInterval);
+const serverURL = `https://mern-chat-server-q9l2.onrender.com`; // Ensure this uses the correct protocol (http or https)
+
+    setInterval(() => {
+      https.get(serverURL, (res) => { // Change to https.get if using HTTP
+        console.log(`Server pinged: ${res.statusCode}`);
+      }).on("error", (err) => {
+        console.error("Error pinging the server:", err.message);
+      });
+    }, 6000);
 
 module.exports = app;
