@@ -53,6 +53,6 @@ const serverURL = `https://mern-chat-server-q9l2.onrender.com`; // Ensure this u
       }).on("error", (err) => {
         console.error("Error pinging the server:", err.message);
       });
-    }, 60000);
+    }, 600000);
 
 module.exports = app;
